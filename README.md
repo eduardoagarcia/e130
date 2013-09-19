@@ -5,9 +5,9 @@
 
 The E130 Pal helps to visually see how the E130 tag is executed within Blackbaud's Luminate CRM.
 
-Uses include seeing how expressions are handled, building your own expressions, and learning more about the power of E130.
+Uses include seeing how expressions are handled, building your own expressions, and learning more about the power of the E130 tag.
 
-Included in E130 is command documentation, a stack trace so you can see what it is doing, and the ability to add tags/values to build more complex expressions.
+Included in E130 Pal is command documentation, a stack trace so you can see what it is doing, and the ability to add tags/values to build more complex expressions.
 
 ## Examples:
 
