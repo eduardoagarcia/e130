@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>E130 Pal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- minified bootstrap CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--jQuery -->
+    <script src="js/jquery-2.0.3.min.js" ></script>
+    <!-- minified bootstrap JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- e130.js -->
+    <script src="js/e130.js"></script>
+    <style type="text/css">
+      body { padding-top: 100px; }
+      .btn-example.btn { padding-left: 0; }
+    </style>
+  </head>
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">E130 Pal</a>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="row">
+        <div class="col-lg-7">
+
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Expression</h3>
+            </div>
+            <form id="e130Form">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon"><strong class="text-danger">[[E130:</strong></span>
+                  <input id="e130Input" type="text" class="form-control" value="1 2 + 4 + [[S1:first_name]]">
+                  <span class="input-group-addon"><strong class="text-danger">]]</strong></span>
+                </div>
+              </div>
+              <button id="e130Evaluate" type="button" class="btn btn-success">Evaluate</button>
+            </form>
+          </div>
+
+          <div id="resultsContainer" class="panel panel-success hidden">
+            <div class="panel-heading">
+              <h3 class="panel-title">Stack Results</h3>
+            </div>
+            <div id="stackResults"></div>
+          </div>
+          
+        </div>
+        <div class="col-lg-5">
+
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#custom_tab" data-toggle="tab">Custom Tags</a></li>
+            <li><a href="#history_tab" data-toggle="tab">Expression History</a></li>
+            <li><a href="#reference_tab" data-toggle="tab">Reference</a></li>
+          </ul>
+
+          <div class="tab-content" style="padding-top: 20px;">
+
+            <div id="custom_tab" class="tab-pane panel panel-info fade active in">
+              <div class="panel-heading">
+                <h3 class="panel-title">Custom Tags</h3>
+              </div>
+              <div id="customTags">
+                
+                <!-- default value for example -->
+                <div id="tagXI6VFif6rU" class="input-group" style="margin-bottom: 5px;">
+                  <span class="input-group-btn">
+                    <button data-id="tagXI6VFif6rU" class="btn btn-primary btn-small btn-reference" type="button" data-insert="[[S1:first_name]]">[[S1:first_name]]</button>
+                  </span>
+                  <input data-id="tagXI6VFif6rU" type="text" class="form-control input-small" value="John">
+                  <span class="input-group-btn">
+                    <button class="btn btn-info btn-small remove-tag" type="button" data-id="tagXI6VFif6rU">&times;</button>
+                  </span>
+                </div>
+
+              </div>
+              <br/>
+              <div id="addTag" class="form-inline">
+                <input id="luminateTag" type="text" class="form-control input-small" placeholder="Luminate Tag" style="width: 300px;" value="[[S1:last_name]]">
+                <button id="addLuminateTag" type="button" class="btn btn btn-info btn-mini">Add Tag</button>
+              </div>
+            </div>
+
+            <div id="history_tab" class="panel panel-info tab-pane fade">
+              <div class="panel-heading">
+                <h3 class="panel-title">Expression History</h3>
+              </div>
+              <div id="stackHistory">
+                <button id="clearExpressionHistory" type="button" class="btn btn-info btn-mini pull-right">Clear History</button>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+
+            <div id="reference_tab" class="panel panel-info tab-pane fade">
+              <div class="panel-heading">
+                <h3 class="panel-title">Reference</h3>
+              </div>
+              <div id="reference" style="height: 650px; overflow-y: auto;">
+
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Operator</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr>
+                      <td align="right"><button data-insert="+" type="button" class="btn-reference btn btn-info btn-mini">&nbsp;+&nbsp;</button></td>
+                      <td>
+                        <small>[[E130: X Y +]] Adds Y to X</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="1 2 +">example: [[E130: 1 2 +]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="-" type="button" class="btn-reference btn btn-info btn-mini">&nbsp;-&nbsp;</button></td>
+                      <td>
+                        <small>[[E130: X Y -]] Subtracts Y from X</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="10 7 -">example: [[E130: 10 7 -]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="*" type="button" class="btn-reference btn btn-info btn-mini">&nbsp;*&nbsp;</button></td>
+                      <td>
+                        <small>[[E130: X Y *]] Multiplies Y with X</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="11 3 *">example: [[E130: 11 3 *]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="/" type="button" class="btn-reference btn btn-info btn-mini">&nbsp;/&nbsp;</button></td>
+                      <td>
+                        <small>[[E130: X Y /]] Divides X by Y</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="12 3 /">example: [[E130: 12 3 /]]</button>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td align="right">&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                      <td align="right"><button data-insert="==" type="button" class="btn-reference btn btn-info btn-mini">&nbsp;==&nbsp;</button></td>
+                      <td>
+                        <small>[[E130: X Y ==]] Evaluates if X is numerically equal to Y (True = 1, False = 0)</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="1 4 ==">example: [[E130: 1 4 ==]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="<" type="button" class="btn-reference btn btn-info btn-mini">&nbsp;<&nbsp;</button></td>
+                      <td>
+                        <small>[[E130: X Y <]] Evaluates if X is less than Y (True = 1, False = 0)</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="1 4 <">example: [[E130: 1 4 <]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert=">" type="button" class="btn-reference btn btn-info btn-mini">&nbsp;>&nbsp;</button></td>
+                      <td>
+                        <small>[[E130: X Y >]] Evaluates if X is greater than Y (True = 1, False = 0)</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="1 4 >">example: [[E130: 1 4 >]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="&&" type="button" class="btn-reference btn btn-info btn-mini">&nbsp;&&&nbsp;</button></td>
+                      <td>
+                        <small>[[E130: X Y &&]] Evaluates if X and Y are True (1) (True = 1, False = 0)</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="1 4 < 2 4 < &&">example: [[E130: 1 4 < 2 4 < &&]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="||" type="button" class="btn-reference btn btn-info btn-mini">&nbsp;||&nbsp;</button></td>
+                      <td>
+                        <small>[[E130: X Y ||]] Evaluates if X or Y is True (1) (True = 1, False = 0)</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="6 4 < 8 4 < ||">example: [[E130: 6 4 < 8 4 < ||]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="?" type="button" class="btn-reference btn btn-info btn-mini">&nbsp;?&nbsp;</button></td>
+                      <td>
+                        <small>[[S130: X Y Z ?]] If X is False (0) returns Z; if X is True (1) returns Y</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="1 2 < true false ?">example: [[E130: 1 2 < true false ?]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="!" type="button" class="btn-reference btn btn-info btn-mini">&nbsp;!&nbsp;</button></td>
+                      <td>
+                        <small>[[S130: X !]] If X is False (0) returns 1; if X is True (1) returns 0</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="3 2 > !">example: [[E130: 3 2 > !]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="max" type="button" class="btn-reference btn btn-info btn-mini">max</button></td>
+                      <td>
+                        <small>[[E130: X Y max]] Returns the numerical maximum, X or Y</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="99 100 max">example: [[E130: 99 100 max]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="min" type="button" class="btn-reference btn btn-info btn-mini">min</button></td>
+                      <td>
+                        <small>[[E130: X Y min]] Returns the numerical minimum, X or Y</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="99 100 min">example: [[E130: 99 100 min]]</button>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td align="right">&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                      <td align="right"><button data-insert="int" type="button" class="btn-reference btn btn-info btn-mini">int</button></td>
+                      <td>
+                        <small>[[E130: X int]] Returns the integer value of X</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="4.3 int">example: [[E130: 4.3 int]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="number" type="button" class="btn-reference btn btn-info btn-mini">number</button></td>
+                      <td>
+                        <small>[[E130: X number]] Returns the number value of X</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="ab12cd34 number">example: [[E130: ab12cd34 number]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="string" type="button" class="btn-reference btn btn-info btn-mini">string</button></td>
+                      <td>
+                        <small>[[E130: X string]] Returns the string value of X</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="22.54 string">example: [[E130: 22.54 string]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="currency" type="button" class="btn-reference btn btn-info btn-mini">currency</button></td>
+                      <td>
+                        <small>[[E130: X currency]] Returns X in USD currency format</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="123 currency">example: [[E130: 123 currency]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="roundmult" type="button" class="btn-reference btn btn-info btn-mini">roundmult</button></td>
+                      <td>
+                        <small>[[E130: X Y roundmult]] Rounds X to the nearest multiple of Y</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="2.99 3 * 1 roundmult">example: [[E130: 2.99 3 * 1 roundmult]]</button>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td align="right">&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                      <td align="right"><button data-insert="pop" type="button" class="btn-reference btn btn-info btn-mini">pop</button></td>
+                      <td>
+                        <small>[[E130: X pop]] Pops (removes) X from the stack</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="1 2 3 pop">example: [[E130: 1 2 3 pop]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="dup" type="button" class="btn-reference btn btn-info btn-mini">dup</button></td>
+                      <td>
+                        <small>[[E130: X dup]] Duplicates X on the stack</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="1 2 dup">example: [[E130: 1 2 dup]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="swap" type="button" class="btn-reference btn btn-info btn-mini">swap</button></td>
+                      <td>
+                        <small>[[E130: X Y swap]] Swaps stack positions of X and Y</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="1 2 swap">example: [[E130: 1 2 swap]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="concat" type="button" class="btn-reference btn btn-info btn-mini">concat</button></td>
+                      <td>
+                        <small>[[E130: X Y concat]] Concatenates X and Y</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="black baud concat">example: [[E130: black baud concat]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="replaceall" type="button" class="btn-reference btn btn-info btn-mini">replaceall</button></td>
+                      <td>
+                        <small>[[E130: X Y Z replaceall]] Replaces every instance of Y with Z in the string X</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="wow w m replaceall">example: [[E130: wow w m replaceall]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="substring" type="button" class="btn-reference btn btn-info btn-mini">substring</button></td>
+                      <td>
+                        <small>[[E130: X Y Z substring]] Returns a substring of X, starting at index Y and ending at index Z</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="hello 1 2 substring">example: [[E130: hello 1 2 substring]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="compare" type="button" class="btn-reference btn btn-info btn-mini">compare</button></td>
+                      <td>
+                        <small>[[E130: X Y compare]] Evaluates the difference between the ASCII decimal values of X and Y</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="x y compare">example: [[E130: x y compare]]</button>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td align="right">&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                      <td align="right"><button data-insert="indexof" type="button" class="btn-reference btn btn-info btn-mini">indexof</button></td>
+                      <td>
+                        <small>[[E130: X Y indexof]] Returns the index of Y in X</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="hello e indexof">example: [[E130: hello e indexof]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="nextindexof" type="button" class="btn-reference btn btn-info btn-mini">nextindexof</button></td>
+                      <td>
+                        <small>[[E130: X Y Z nextindexof]] Returns the next index of Y in X after Z index</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="wow w 1 nextindexof">example: [[E130: hello l 2 nextindexof]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="lastindexof" type="button" class="btn-reference btn btn-info btn-mini">lastindexof</button></td>
+                      <td>
+                        <small>[[E130: X Y lastindexof]] Returns the index of the last time Y appears in X</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="hello l lastindexof">example: [[E130: hello l lastindexof]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="stringcount" type="button" class="btn-reference btn btn-info btn-mini">stringcount</button></td>
+                      <td>
+                        <small>[[E130: X Y stringcount]] Returns how many times Y appears in X</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="hello l stringcount">example: [[E130: hello l stringcount]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="length" type="button" class="btn-reference btn btn-info btn-mini">length</button></td>
+                      <td>
+                        <small>[[E130: X length]] Returns X's length in characters</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="hello length">example: [[E130: hello length]]</button>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td align="right">&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                      <td align="right"><button data-insert="stackcount" type="button" class="btn-reference btn btn-info btn-mini">stackcount</button></td>
+                      <td>
+                        <small>[[E130: stackcount]] Returns the number of items in the stack</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="1 2 3 stackcount">example: [[E130: 1 2 3 stackcount]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="printstack" type="button" class="btn-reference btn btn-info btn-mini">printstack</button></td>
+                      <td>
+                        <small>[[E130: printstack]] Creates a string of the entire stack, then pushes that string to the end of the stack</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="1 2 foo bar printstack">example: [[E130: 1 2 foo bar printstack]]</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right"><button data-insert="help" type="button" class="btn-reference btn btn-info btn-mini">help</button></td>
+                      <td>
+                        <small>[[E130: help]] help</small><br/>
+                        <button type="button" class="btn-example btn btn-link btn-mini" data-example="help">example: [[E130: help]]</button>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
+            
+          </div>
+
+          
+
+          
+
+          
+          
+        </div>
+      </div>
+
+    </div><!-- /.container -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-319440-15', 'eduar.de');
+      ga('send', 'pageview');
+    </script>
+
+  </body>
+</html>
