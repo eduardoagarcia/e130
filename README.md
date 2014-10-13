@@ -63,6 +63,6 @@ The following operations are supported:
 
 ## Links:
 
-[E130 Pal](http://eduar.de/tools/e130/)
+[E130 Pal](http://eduardoagarcia.com/dev-tools/e130/index.html)
 
 More examples plus a full reference (with examples as well) are built into the tool.
