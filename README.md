@@ -3,11 +3,11 @@
 
 ## Overview:
 
-[E130 Pal](http://eduar.de/tools/e130/) helps to visually see how the E130 tag executes within Blackbaud's Luminate CRM.  The E130 tag evaluates [Reverse Polish Notation](http://en.wikipedia.org/wiki/Reverse_Polish_notation) expressions.
+E130 Pal helps to visually see how the E130 tag executes within Blackbaud's Luminate CRM.  The E130 tag evaluates [Reverse Polish Notation](http://en.wikipedia.org/wiki/Reverse_Polish_notation) expressions.
 
-Uses of [E130 Pal](http://eduar.de/tools/e130/) include seeing how expressions are handled, building your own expressions, and learning more about the power of the E130 tag.
+Uses of E130 Pal include seeing how expressions are handled, building your own expressions, and learning more about the power of the E130 tag.
 
-Included in [E130 Pal](http://eduar.de/tools/e130/) is command documentation, a stack trace so you can see what it is doing, and the ability to add tags/values to build more complex expressions.
+Included in E130 Pal is command documentation, a stack trace so you can see what it is doing, and the ability to add tags/values to build more complex expressions.
 
 ## Examples:
 
@@ -63,6 +63,6 @@ The following operations are supported:
 
 ## Links:
 
-[E130 Pal](http://eduardoagarcia.com/dev-tools/e130/index.html)
+E130 Pal
 
 More examples plus a full reference (with examples as well) are built into the tool.
